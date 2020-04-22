@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1261</width>
+    <height>1025</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>授权管理</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="tabWidget">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>130</y>
+      <width>871</width>
+      <height>421</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>添加授权</string>
+     </attribute>
+     <widget class="QPushButton" name="button1">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>260</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>添加</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>100</y>
+        <width>81</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>用户id</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>160</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>授权省份</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="id1">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>120</y>
+        <width>351</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="xiala1">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>180</y>
+        <width>321</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>北京市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>天津市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>河北省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>山西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>内蒙古自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>辽宁省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>吉林省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>黑龙江省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>上海市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>江苏省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>浙江省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>安徽省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>福建省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>江西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>山东省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>河南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>湖北省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>湖南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>广东省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>广西壮族自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>海南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>重庆市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>四川省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>贵州省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>云南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>西藏自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>陕西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>甘肃省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>青海省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>宁夏回族自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>新疆维吾尔自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>香港特别行政区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>澳门特别行政区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>台湾省</string>
+       </property>
+      </item>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>删除授权</string>
+     </attribute>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>100</y>
+        <width>81</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>用户id</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="xiala2">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>180</y>
+        <width>321</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>北京市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>天津市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>河北省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>山西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>内蒙古自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>辽宁省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>吉林省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>黑龙江省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>上海市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>江苏省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>浙江省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>安徽省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>福建省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>江西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>山东省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>河南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>湖北省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>湖南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>广东省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>广西壮族自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>海南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>重庆市</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>四川省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>贵州省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>云南省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>西藏自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>陕西省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>甘肃省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>青海省</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>宁夏回族自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>新疆维吾尔自治区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>香港特别行政区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>澳门特别行政区</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>台湾省</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>160</y>
+        <width>111</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>授权省份</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="id2">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>120</y>
+        <width>351</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button2">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>260</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>删除</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>废为庶人</string>
+     </attribute>
+     <widget class="QLineEdit" name="id2_3">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>120</y>
+        <width>351</width>
+        <height>41</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>100</y>
+        <width>81</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>用户id</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="button2_3">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>260</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>15</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>废除</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QTableWidget" name="table1">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>590</y>
+      <width>891</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>用户id</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>用户名</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>授权省份id</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>授权省份名称</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>授权类型</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>590</y>
+      <width>112</width>
+      <height>34</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>刷新</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1261</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

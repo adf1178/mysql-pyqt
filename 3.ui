@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1777</width>
+    <height>1446</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Interface</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTableWidget" name="table1">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>220</y>
+      <width>951</width>
+      <height>361</height>
+     </rect>
+    </property>
+    <column>
+     <property name="text">
+      <string>省份</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>累计确诊</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>现有确诊</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>治愈患者</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>疑似病例</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>死亡人数</string>
+     </property>
+    </column>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>740</x>
+      <y>130</y>
+      <width>221</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>221</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::RightToLeft</enum>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string>订阅省份结果</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="history">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>660</y>
+      <width>221</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>历史数据查询</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dangerQ">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>910</y>
+      <width>231</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>危险车次查询</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PatientQ">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>660</y>
+      <width>241</width>
+      <height>151</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>患者查询（管理员）</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dangerI">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>910</y>
+      <width>231</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>危险车次编辑</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PatientE">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>1140</y>
+      <width>231</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>患者信息编辑</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Auth">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>670</y>
+      <width>271</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>授权管理</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="dangerQ_2">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>1130</y>
+      <width>231</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>订阅</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Subp">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>140</y>
+      <width>241</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>显示订阅省份（无订阅则全国）</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="Wholep">
+    <property name="geometry">
+     <rect>
+      <x>1040</x>
+      <y>140</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>显示全国</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1777</width>
+     <height>30</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
