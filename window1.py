@@ -26,6 +26,7 @@ class Ui_loginwindow(object):
         self.user_name.setGeometry(QtCore.QRect(370, 320, 191, 25))
         self.user_name.setObjectName("user_name")
         self.password = QtWidgets.QLineEdit(self.centralwidget)
+        self.password.setEchoMode(QtWidgets.QLineEdit.Password)
         self.password.setGeometry(QtCore.QRect(370, 380, 191, 25))
         self.password.setObjectName("password")
         self.login = QtWidgets.QPushButton(self.centralwidget)

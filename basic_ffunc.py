@@ -5,6 +5,11 @@ def GetUserCount(cursor):
     result = cursor.fetchall()
     re = [x[0] for x in result]
     return max(re)
+def GetPatientCount(cursor):
+    cursor.execute("select Patient_id from patient")
+    result = cursor.fetchall()
+    re = [x[0] for x in result]
+    return max(re)
 def md5(str):
     m = hashlib.md5()
     bytes(str,encoding='utf-8')
@@ -68,21 +73,6 @@ def UserLogin(cursor,Userinfo):
         return -1
 
 
-def insertPatient(cursor,patientinfotuple,db):
-    '''
-
-    :param cursor:
-    :param infotuple 患者信息的元组，按照一定顺序:
-    :param db:
-    :return 如果插入成功则返回1， 失败返回0:
-    '''
-    sql = "insert into Patient(Patient_id, Pname, Province_id,  Id_number, Birthday) values (%s,%s,%s,%s,%s)"
-    try:
-        cursor.execute(sql,patientinfotuple)
-        db.commit()
-        return 1
-    except:
-        return 0
 def deleteDangerousCar(cursor,trafficInfoList,db):
     '''
     删除某一危险车次
@@ -127,8 +117,8 @@ def UpdateIntimeData(cursor,db):
     '''
     sql1 = "update Intime_data as A2 set A2.Total_number = (select count(*) as total from Patient as A1 where A2.Province_id = A1.Province_id)"
     sql2 = "update Intime_data as A2 set A2.zhiyu = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=1)"
-    sql3 = "update Intime_data as A2 set A2.yisi = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=2)"
-    sql4 = "update Intime_data as A2 set A2.xianyou = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=3)"
+    sql3 = "update Intime_data as A2 set A2.xianyou = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=2)"
+    sql4 = "update Intime_data as A2 set A2.yisi = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=3)"
     sql5 = "update Intime_data as A2 set A2.siwang = (select count(*) as total from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A1.Patient_id=A3.Patient_id and A3.Pstatus=4)"
     cursor.execute(sql1)
     cursor.execute(sql2)
@@ -254,31 +244,33 @@ def InsertOrUpdateHistory(cursor,db):
     :param db:
     :return:
     '''
-    sql = "select * from history_data where Pdate = curdate()"
-    cursor.execute(sql)
-    tmp = cursor.fetchall()
-    if tmp==():   # 插入
-        for i in range(1,35):
-            sql1 = "insert into history_data values(%s,curdate(),(select count(*) as total from Patient as A1 where A1.Province_id = 1)," \
-               "(select count(*) from Patient natural join Patient_status where Province_id = %s and Pstatus = 1)," \
-               "(select count(*) from Patient natural join Patient_status where Province_id = %s and Pstatus = 2)," \
-               "(select count(*) from Patient natural join Patient_status where Province_id = %s and Pstatus = 3)," \
-               "(select count(*) from Patient natural join Patient_status where Province_id = %s and Pstatus = 4))"
-            cursor.execute(sql1,[i,i,i,i,i])
+
+       # 插入
+    for i in range(1,35):
+        sql = "select * from history_data where Pdate = curdate() and Province_id = %s"
+        cursor.execute(sql,i)
+        tmp = cursor.fetchall()
+        if tmp == ():
+            sql1 = "insert into history_data values(%s,curdate(),(select Total_number from intime_data where Province_id = %s)," \
+               "(select zhiyu from intime_data where Province_id = %s)," \
+               "(select xianyou from intime_data where Province_id = %s)," \
+               "(select yisi from intime_data where Province_id = %s)," \
+               "(select siwang from intime_data where Province_id = %s))"
+            cursor.execute(sql1,[i,i,i,i,i,i])
             db.commit()
 
-    else:   #更新
-        sql2 = "update history_data as A2 set A2.Total_number = (select count(*) from Patient as A1 where A2.Province_id = A1.Province_id)"
-        sql3 = "update history_data as A2 set A2.zhiyu = (select count(*) from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A3.Pstatus=1) where A2.Pdate = curdate()"
-        sql4 = "update history_data as A2 set A2.yisi = (select count(*) from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A3.Pstatus=2) where A2.Pdate = curdate()"
-        sql5 = "update history_data as A2 set A2.xianyou = (select count(*) from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A3.Pstatus=3) where A2.Pdate = curdate()"
-        sql6 = "update history_data as A2 set A2.siwang = (select count(*) from Patient as A1 natural join patient_status as A3 where A2.Province_id = A1.Province_id and A3.Pstatus=4) where A2.Pdate = curdate()"
-        cursor.execute(sql2)
-        cursor.execute(sql3)
-        cursor.execute(sql4)
-        cursor.execute(sql5)
-        cursor.execute(sql6)
-        db.commit()
+        else:   #更新
+            sql2 = "update history_data as A2 set A2.Patient_number = (select Total_number from intime_data as A1 where A1.Province_id = A2.Province_id) where A2.Pdate = curdate()"
+            sql3 = "update history_data as A2 set A2.zhiyu = (select zhiyu from intime_data as A1 where A1.Province_id = A2.Province_id) where A2.Pdate = curdate()"
+            sql4 = "update history_data as A2 set A2.yisi = (select yisi from intime_data as A1 where A1.Province_id = A2.Province_id) where A2.Pdate = curdate()"
+            sql5 = "update history_data as A2 set A2.xianyou = (select xianyou from intime_data as A1 where A1.Province_id = A2.Province_id) where A2.Pdate = curdate()"
+            sql6 = "update history_data as A2 set A2.siwang = (select siwang from intime_data as A1 where A1.Province_id = A2.Province_id) where A2.Pdate = curdate()"
+            cursor.execute(sql2)
+            cursor.execute(sql3)
+            cursor.execute(sql4)
+            cursor.execute(sql5)
+            cursor.execute(sql6)
+            db.commit()
 
 def GetAllAuth(cursor):
     '''
@@ -348,8 +340,92 @@ def ExamAuthRepeat(cursor,userid,provinceid):
     else:
         return 1
 def GetTwolevelProvince(cursor,userid):
-    sql = "select Province_id from authority where User_id = %s and Auth_type = 2"
+    '''
+    查询某用户id所有的授权省份
+    :param cursor:
+    :param userid:
+    :return:
+    '''
+    sql = "select Province_auth from authority where User_id = %s and Auth_type = 2"
     cursor.execute(sql,[userid])
     result = cursor.fetchall()
-    return result
+    re = [x[0] for x in result]
+    return re
+def ExamPatientRepeat(cursor,Bname,Bidnumber):
+    '''
+    检查病人是否有重复
+    :param cursor:
+    :param Bname:
+    :param Bidnumber:
+    :return 未重复返回1，重复返回0:
+    '''
+    sql = "select * from patient where Pname = %s and id_number = %s"
+    cursor.execute(sql,[Bname,Bidnumber])
+    result = cursor.fetchall()
+    if result==():
+        return 1
+    else:
+        return 0
+def insertPatient(cursor,patient_id,id_number,pname,provinceid,birthday,pstatus,db):
+    '''
 
+    :param cursor:
+    :param infotuple 患者信息的元组，按照一定顺序:
+    :param db:
+    :return 如果插入成功则返回1， 失败返回0:
+    '''
+    sql = "insert into patient(Patient_id,id_number,  Pname, Province_id,  Birthday) values (%s,%s,%s,%s,%s)"
+    sql2 = "insert into patient_status(Patient_id,Pstatus) values (%s,%s)"
+    try:
+        cursor.execute(sql,[patient_id,id_number,pname,provinceid,birthday])
+        cursor.execute(sql2,[patient_id,pstatus])
+        db.commit()
+        return 1
+    except:
+        return 0
+
+def deletePatient(cursor,db,Pname,Provinceid,idnumber):
+    '''
+    删除某个患者
+    :param cursor:
+    :param db:
+    :param Pname:
+    :param Provinceid:
+    :param idnumber:
+    :return成功返回1，失败返回0:
+    '''
+    sql = "select Patient_id from patient where id_number = %s and Pname = %s and Province_id = %s"
+    cursor.execute(sql, [idnumber, Pname, Provinceid])
+    result = cursor.fetchall()
+    if result ==():
+        return 0
+    else:
+        patient_id = result[0][0]
+    sql1 = "delete from patient where Patient_id = %s"
+    sql2 = "delete from patient_status where Patient_id = %s"
+    try:
+        cursor.execute(sql1,[patient_id])
+        cursor.execute(sql2,[patient_id])
+        db.commit()
+        return 1
+    except:
+        return 0
+
+def ModifyPatient(cursor,db,pname,province_id,id_number,afterprovince,afterstatus):
+    sql = "select Patient_id from patient where id_number = %s and Pname = %s and Province_id = %s"
+    cursor.execute(sql, [id_number, pname, province_id])
+    result = cursor.fetchall()
+    if result == ():
+        return 0
+    else:
+        patient_id = result[0][0]
+
+    sql1 = "update patient set Province_id = %s where Patient_id = %s"
+    sql2 = "update patient_status set Pstatus = %s where Patient_id = %s"
+    try:
+        cursor.execute(sql1,[afterprovince,patient_id])
+        cursor.execute(sql2,[afterstatus,patient_id])
+        db.commit()
+        return 1
+    except:
+        return 0

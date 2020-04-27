@@ -3,8 +3,8 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow,QDialog,QTableWidgetItem
 #导入designer工具生成的login模块
 from window1 import Ui_loginwindow,Ui_MainWindow
-from window2 import Ui_zhuwindow, Ui_SubWindow,Ui_DangerEWindow,Ui_DangerQuery,Ui_shouquan,Ui_history,Ui_PatientQ
-from dialog import Ui_DialogFail, Ui_DialogSuccess,Ui_meishiDialog,Ui_wandanDialog
+from window2 import Ui_zhuwindow, Ui_SubWindow,Ui_DangerEWindow,Ui_DangerQuery,Ui_shouquan,Ui_history,Ui_PatientQ,Ui_PatientEdit
+from dialog import Ui_DialogFail, Ui_DialogSuccess,Ui_meishiDialog,Ui_wandanDialog,Ui_Dialognoauth,Ui_zhuceshibai
 
 import pymysql
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -15,6 +15,14 @@ current_uid = 0
 class chenggong(QDialog, Ui_DialogSuccess):
     def __init__(self, parent=None):
         super(chenggong, self).__init__(parent)
+        self.setupUi(self)
+class regfail(QDialog, Ui_zhuceshibai):
+    def __init__(self, parent=None):
+        super(regfail, self).__init__(parent)
+        self.setupUi(self)
+class noauth(QDialog, Ui_Dialognoauth):
+    def __init__(self, parent=None):
+        super(noauth, self).__init__(parent)
         self.setupUi(self)
 class wandan(QDialog, Ui_wandanDialog):
     def __init__(self, parent=None):
@@ -32,6 +40,7 @@ class reg(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super(reg, self).__init__(parent)
         self.setupUi(self)
+        self.shibai = regfail()
         self.pushButton.clicked.connect(self.reg)
 
     def reg(self):
@@ -43,6 +52,7 @@ class reg(QMainWindow, Ui_MainWindow):
         flag = UserReg(cursor,db,[user_id,name,passwordHash])
         if flag==-1:
             print("你来晚了")
+            self.shibai.show()
         elif flag==1:
             print("成功")
             NewUserAuth(cursor,user_id,db)
@@ -89,7 +99,7 @@ class zhuwin(QMainWindow, Ui_zhuwindow):
             self.PatientE.setVisible(False)
             self.PatientQ.setVisible(False)
             self.dangerI.setVisible(False)
-        self.result = GetUserSub(cursor, current_uid)
+
         self.initial()
         self.Subp.clicked.connect(self.DispSub)
         self.Wholep.clicked.connect(self.DispWhole)
@@ -99,10 +109,12 @@ class zhuwin(QMainWindow, Ui_zhuwindow):
         self.Auth.clicked.connect(self.OpenAuth)
         self.history.clicked.connect(self.OpenHistory)
         self.PatientQ.clicked.connect(self.OpenPatientQ)
+        self.PatientE.clicked.connect(self.OpenPatientE)
     def initial(self):
         self.DispSub()
 
     def DispSub(self):
+        self.result = GetUserSub(cursor, current_uid)
         self.table1.clearContents()
         self.table1.setRowCount(0)
         if self.result==():
@@ -149,7 +161,9 @@ class zhuwin(QMainWindow, Ui_zhuwindow):
     def OpenPatientQ(self):
         self.window_patientQ = patientQ()
         self.window_patientQ.show()
-
+    def OpenPatientE(self):
+        self.window_patientE = PatientE()
+        self.window_patientE.show()
 class Sub(QMainWindow, Ui_SubWindow):
     def __init__(self, parent=None):
         super(Sub, self).__init__(parent)
@@ -391,6 +405,77 @@ class patientQ(QMainWindow, Ui_PatientQ):
             self.tableWidget.setItem(row, 4, QTableWidgetItem(str(re[4])))
             print(re[5])
             self.tableWidget.setItem(row, 5, QTableWidgetItem(STATUS[re[5]]))
+
+class PatientE(QMainWindow, Ui_PatientEdit):
+    def __init__(self, parent=None):
+        super(PatientE, self).__init__(parent)
+        self.setupUi(self)
+        self.success = chenggong()
+        self.fail = shibai()
+        self.noauth = noauth()
+        self.d1 = {'疑似': 3, '现有': 1, '治愈': 2, '死亡': 4}
+        self.pushButton.clicked.connect(self.xinzeng)
+        self.pushButton_2.clicked.connect(self.shnchu)
+        self.pushButton_3.clicked.connect(self.xiugai)
+    def xinzeng(self):
+        Authlevel = GetUserAuthLevel(cursor,current_uid)
+        authList = GetTwolevelProvince(cursor,current_uid)
+        Pname = self.xiala1.currentText()
+        ProId = ProivinceName_to_Id(cursor,Pname)
+        Bname = self.xinzeng1.text()
+        patientid = GetPatientCount(cursor)+1
+        Bidnumber = self.xinzeng2.text()
+        Birthday = self.xinzeng3.date().toString("yyyy-MM-dd")
+        pstatus = self.d1[self.xiala2.currentText()]
+        flag = ExamPatientRepeat(cursor, Bname, Bidnumber)
+        if Authlevel<3 and ProId not in authList or flag==0:
+            self.noauth.show()
+            return
+        print(patientid,Bidnumber,Bname,ProId,Birthday,pstatus)
+        flag2 = insertPatient(cursor,patientid,Bidnumber,Bname,ProId,Birthday,pstatus,db)
+        print(flag2)
+        if flag2==0:
+            self.noauth.show()
+            return
+        UpdateIntimeData(cursor,db)
+        InsertOrUpdateHistory(cursor,db)
+        self.success.show()
+
+    def shnchu(self):
+        bname = self.shanchu1.text()
+        bidnumber = self.shanchu2.text()
+        pname = self.shanchu3.currentText()
+        ProId = ProivinceName_to_Id(cursor,pname)
+        Authlevel = GetUserAuthLevel(cursor, current_uid)
+        authList = GetTwolevelProvince(cursor, current_uid)
+        if Authlevel<3 and ProId not in authList:
+            self.noauth.show()
+            return
+        flag = deletePatient(cursor,db,bname,ProId,bidnumber)
+        if flag==0:
+            self.noauth.show()
+            return
+        UpdateIntimeData(cursor, db)
+        InsertOrUpdateHistory(cursor, db)
+        self.chenggong.show()
+    def xiugai(self):
+        bname = self.xiugai1.text()
+        bidnumber = self.xiugai2.text()
+        pname = self.xiugai5.currentText()
+        ProId = ProivinceName_to_Id(cursor, pname)
+        afterProvinceName = self.xiugai3.currentText()
+        afterProid = ProivinceName_to_Id(cursor,afterProvinceName)
+        afterstatus = self.d1[self.xiugai4.currentText()]
+        Authlevel = GetUserAuthLevel(cursor, current_uid)
+        authList = GetTwolevelProvince(cursor, current_uid)
+        if Authlevel < 3 and ProId not in authList:
+            self.noauth.show()
+            return
+        flag = ModifyPatient(cursor,db,bname,ProId,bidnumber,afterProid,afterstatus)
+        if flag==0:
+            self.noauth.show()
+            return
+        self.success.show()
 
 if __name__ == "__main__":
     #固定的，PyQt5程序都需要QApplication对象。sys.argv是命令行参数列表，确保程序可以双击运行
